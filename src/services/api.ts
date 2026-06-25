@@ -34,6 +34,12 @@ export class Api {
           logout();
           window.location.href = "/";
         }
+
+        if (error?.response?.status === 500) {
+          if (error?.response?.data) {
+            console.log("Erro 500:", error.response.data);
+          }
+        }
       })
   }
 

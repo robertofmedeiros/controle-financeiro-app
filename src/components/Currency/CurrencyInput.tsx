@@ -8,6 +8,8 @@ interface CurrencyInputProps {
   value: number;
   onChange: (value: number) => void;
   disabled?: boolean;
+  error?: boolean;
+  helperText?: string;
 }
 
 const CurrencyInput: React.FC<CurrencyInputProps> = ({
@@ -16,6 +18,8 @@ const CurrencyInput: React.FC<CurrencyInputProps> = ({
   value,
   onChange,
   disabled = false,
+  error = false,
+  helperText = '',
 }) => {
 
   const parseCurrency = (input: string): number => {
@@ -38,6 +42,9 @@ const CurrencyInput: React.FC<CurrencyInputProps> = ({
       onChange={handleChange}
       fullWidth
       disabled={disabled}
+      margin="dense"
+      error={error || false}
+      helperText={helperText || ''}
     />
   );
 };
