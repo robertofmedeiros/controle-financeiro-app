@@ -1,9 +1,8 @@
-import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, FormControlLabel, Switch } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 import api from "../../services/api";
 import { Transaction } from "../../types/Transaction";
 import CurrencyInput from "../Currency/CurrencyInput";
-import { error } from "console";
 import { notifierStore } from "../Store/NotifierStore";
 
 interface ModalTransactionsAddProperties {
@@ -12,6 +11,7 @@ interface ModalTransactionsAddProperties {
     transacao?: Transaction | null,
     year: number,
     month: number,
+    status: 'PENDENTE' | 'PAGO'
 }
 
 interface ErrorsFields {
@@ -42,6 +42,7 @@ const ModalTransactionsAdd: FC<ModalTransactionsAddProperties> = ({
     transacao,
     year,
     month,
+    status
 }) => {
 
     const [form, setForm] = useState<Omit<Transaction, "id">>({
@@ -51,6 +52,7 @@ const ModalTransactionsAdd: FC<ModalTransactionsAddProperties> = ({
         type: "expense",
         mes: month,
         ano: year,
+        situacao: status
       });
     const [errorsFields, setErrorsFields] = useState<ErrorsFields>(DEFAULT_ERRORSFIELDS);
 
@@ -68,7 +70,7 @@ const ModalTransactionsAdd: FC<ModalTransactionsAddProperties> = ({
                 await api.post("/lancamentos", form);
             }
             onClose();
-            setForm({ descricao: "", valor: 0, date: "", type: "expense", ano: year, mes: month});
+            setForm({ descricao: "", valor: 0, date: "", type: "expense", ano: year, mes: month, situacao: status});
         } catch (err) {
             // Trate o erro conforme necessário
         }
@@ -82,6 +84,7 @@ const ModalTransactionsAdd: FC<ModalTransactionsAddProperties> = ({
         type: "expense",
         mes: month,
         ano: year,
+        situacao: status
       });
     }, [transacao])
 
@@ -153,6 +156,12 @@ const ModalTransactionsAdd: FC<ModalTransactionsAddProperties> = ({
                         onChange={(value: number) => {
                             setForm({ ...form, valor: value ?  value : 0});
                         }} />
+                    <FormControlLabel
+                        control={<Switch checked={form.situacao === "PAGO"} onChange={(e) => {
+                            setForm({ ...form, situacao: e.target.checked ? "PAGO" : "PENDENTE" });
+                        }} />}
+                        label={form.situacao === "PAGO" ? "Pago" : "Pendente"}
+                    />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={onClose}>Cancelar</Button>

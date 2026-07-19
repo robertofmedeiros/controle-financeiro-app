@@ -33,6 +33,7 @@ export default function Transactions() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [open, setOpen] = useState(false);
   const [currentTransaction, setCurrentTransaction] = useState<Transaction | null>(null);
+  const [status, setStatus] = useState<'PENDENTE' | 'PAGO'>('PENDENTE');
 
   useEffect(() => {
     fetchTransactions();
@@ -88,6 +89,7 @@ export default function Transactions() {
           <TableHead>
             <TableRow>
               <TableCell>Descrição</TableCell>
+              <TableCell>Situação</TableCell>
               <TableCell>Valor</TableCell>
             </TableRow>
           </TableHead>
@@ -103,6 +105,7 @@ export default function Transactions() {
                 console.log(">>>", tx);
               }}>
                 <TableCell>{tx.descricao}</TableCell>
+                <TableCell>{tx.situacao}</TableCell>
                 <TableCell>
                   {CurrencyUtil.formatCurrency(Number(tx.valor.toFixed(2)))}
                 </TableCell>
@@ -130,7 +133,7 @@ export default function Transactions() {
           setOpen(false);
           setCurrentTransaction(null);
           fetchTransactions();
-        }} />
+        } } status={status} />
     </Container>
   </>;
 }

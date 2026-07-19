@@ -6,4 +6,5 @@ export interface Transaction {
   type: "income" | "expense";
   mes: number,
   ano: number,
+  situacao: "PENDENTE" | "PAGO"
 }
