@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./components/Auth/Login";
 import Transactions from "./pages/Transactions";
+import Audit from "./pages/Audit";
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import AuthenticatedRoute from "./components/Auth/AuthenticatedRoute";
 import LoadingScreen from "./components/Loading/LoadingScreen";
@@ -21,6 +22,11 @@ const App: FC = () => {
           <Route path="/transactions" element={
             <ProtectedRoute>
               <Transactions />
+            </ProtectedRoute>
+          } />
+          <Route path="/audit" element={
+            <ProtectedRoute>
+              <Audit />
             </ProtectedRoute>
           } />
           <Route path="*" element={
