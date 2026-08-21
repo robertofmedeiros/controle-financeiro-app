@@ -1,0 +1,58 @@
+/* ─── Página de Auditoria ────────────────────────────────────────── */
+.pageContainer {
+  margin-top: var(--space-4);
+}
+
+.pageTitle {
+  margin-bottom: var(--space-2) !important;
+}
+
+/* Linha de filtros */
+.filtersRow {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.filterEntity {
+  min-width: 160px !important;
+}
+
+.filterAction {
+  min-width: 130px !important;
+}
+
+.filterPerPage {
+  min-width: 100px;
+}
+
+/* Paginação */
+.paginationRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--space-1);
+  padding: 0 var(--space-1);
+}
+
+.paginationControls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* Cards mobile */
+.mobileCards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-half) !important;
+}

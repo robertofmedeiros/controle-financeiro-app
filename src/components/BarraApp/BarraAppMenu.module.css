@@ -1,0 +1,27 @@
+/* ─── Barra de Navegação ─────────────────────────────────────────── */
+.navGroup {
+  flex-grow: 1;
+  padding-left: 2%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.navLink {
+  cursor: pointer;
+  border-bottom: 2px solid var(--color-nav-inactive);
+  padding-bottom: 2px;
+  transition: border-color 0.2s ease;
+}
+
+.navLinkActive {
+  border-bottom-color: var(--color-nav-active);
+}
+
+.username {
+  margin-right: var(--space-2) !important;
+}
+
+.logoutButton {
+  cursor: pointer;
+}

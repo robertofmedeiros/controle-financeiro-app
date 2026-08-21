@@ -1,0 +1,44 @@
+/* ─── Modal de Detalhe de Auditoria ─────────────────────────────── */
+.titleBox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.tableHeader {
+  background-color: var(--color-bg-muted);
+}
+
+.changedRow {
+  background-color: var(--color-highlight-changed);
+}
+
+/* Nome do campo */
+.fieldName {
+  white-space: nowrap;
+}
+
+.fieldNameChanged {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Valor anterior */
+.oldValue {
+  word-break: break-all;
+}
+
+.oldValueChanged {
+  color: var(--color-value-removed);
+  word-break: break-all;
+}
+
+/* Novo valor */
+.newValue {
+  word-break: break-all;
+}
+
+.newValueChanged {
+  color: var(--color-value-added);
+  word-break: break-all;
+}

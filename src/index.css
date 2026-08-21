@@ -1,3 +1,30 @@
+/* ─── CSS Custom Properties ─────────────────────────────────────── */
+:root {
+  /* Cores */
+  --color-primary: #1976d2;
+  --color-primary-dark: #1565c0;
+  --color-bg-muted: #f5f5f5;
+  --color-highlight-changed: #fff8e1;
+  --color-value-removed: #d32f2f;
+  --color-value-added: #2e7d32;
+  --color-nav-active: #ffffff;
+  --color-nav-inactive: transparent;
+
+  /* Espaçamentos (alinhados à grade do MUI: 1 unit = 8px) */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-half: 4px;
+}
+
+/* ─── Reset e Base ──────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

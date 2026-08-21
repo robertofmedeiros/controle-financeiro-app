@@ -12,6 +12,7 @@ import {
   Box,
   IconButton,
   TableFooter,
+  Chip,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
@@ -21,6 +22,7 @@ import { Transaction } from "../types/Transaction";
 import ModalTransactionsAdd from "../components/Modals/ModalTransactionsAdd";
 import { CurrencyUtil } from "../components/Utils/CurrencyUtil";
 import BarraAppMenu from "../components/BarraApp/BarraAppMenu";
+import styles from "./Transactions.module.css";
 
 function getMonthYearString(year: number, month: number) {
   return new Date(year, month - 1).toLocaleString("default", { month: "long", year: "numeric" });
@@ -71,11 +73,11 @@ export default function Transactions() {
 
   return <>
     <BarraAppMenu />
-    <Container maxWidth="lg" sx={{ mt: 4 }}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-        <Box display="flex" alignItems="center">
+    <Container maxWidth="lg" className={styles.pageContainer}>
+      <Box className={styles.pageHeader}>
+        <Box className={styles.monthNav}>
           <IconButton onClick={handlePrevMonth}><ArrowBackIosNewIcon /></IconButton>
-          <Typography variant="h6" sx={{ mx: 2, width: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', textAlign: 'center' }}>
+          <Typography variant="h6" className={styles.monthTitle}>
             {getMonthYearString(year, month)}
           </Typography>
           <IconButton onClick={handleNextMonth}><ArrowForwardIosIcon /></IconButton>
@@ -99,13 +101,14 @@ export default function Transactions() {
                 <TableCell colSpan={4} align="center">Sem transações neste mês.</TableCell>
               </TableRow>
             ) : transactions.map((tx) => (
-              <TableRow key={tx.id} onClick={() => {
+              <TableRow key={tx.id} className={styles.tableRow} onClick={() => {
                 setCurrentTransaction(tx);
                 setOpen(true);
                 console.log(">>>", tx);
               }}>
+                
                 <TableCell>{tx.descricao}</TableCell>
-                <TableCell>{tx.situacao}</TableCell>
+                <TableCell><Chip label={tx.situacao} color={tx.situacao === 'PAGO' ? 'success' : 'warning'} size="small" /></TableCell>
                 <TableCell>
                   {CurrencyUtil.formatCurrency(Number(tx.valor.toFixed(2)))}
                 </TableCell>
@@ -129,10 +132,12 @@ export default function Transactions() {
         transacao={currentTransaction}
         year={year}
         month={month}
-        onClose={() => {
+        onClose={(cancel: boolean) => {
           setOpen(false);
           setCurrentTransaction(null);
-          fetchTransactions();
+          if (!cancel) {
+            fetchTransactions();
+          }
         } } status={status} />
     </Container>
   </>;

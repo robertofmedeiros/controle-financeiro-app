@@ -22,7 +22,6 @@ import {
   CircularProgress,
   Card,
   CardContent,
-  CardActions,
   useTheme,
   useMediaQuery,
 } from "@mui/material";
@@ -33,6 +32,7 @@ import BarraAppMenu from "../components/BarraApp/BarraAppMenu";
 import ModalAuditDetail from "../components/Modals/ModalAuditDetail";
 import api from "../services/api";
 import { AuditRecord, AuditMeta } from "../types/Audit";
+import styles from "./Audit.module.css";
 
 const ACTION_COLORS: Record<string, "success" | "warning" | "error" | "default"> = {
   INSERT: "success",
@@ -105,14 +105,14 @@ export default function Audit() {
   return (
     <>
       <BarraAppMenu />
-      <Container maxWidth="lg" sx={{ mt: 4 }}>
-        <Typography variant="h6" mb={2}>
+      <Container maxWidth="lg" className={styles.pageContainer}>
+        <Typography variant="h6" className={styles.pageTitle}>
           Auditoria
         </Typography>
 
         {/* Filtros */}
-        <Box display="flex" gap={2} mb={2} flexWrap="wrap" alignItems="flex-end">
-          <FormControl size="small" sx={{ minWidth: 160 }}>
+        <Box className={styles.filtersRow}>
+          <FormControl size="small" className={styles.filterEntity}>
             <InputLabel>Entidade</InputLabel>
             <Select
               value={filterEntity}
@@ -137,7 +137,7 @@ export default function Audit() {
             onChange={(e) => setFilterEntityId(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleFilterChange()}
           />
-          <FormControl size="small" sx={{ minWidth: 130 }}>
+          <FormControl size="small" className={styles.filterAction}>
             <InputLabel>Ação</InputLabel>
             <Select
               value={filterAction}
@@ -153,7 +153,7 @@ export default function Audit() {
               <MenuItem value="DELETE">DELETE</MenuItem>
             </Select>
           </FormControl>
-          <FormControl size="small" sx={{ minWidth: 100 }}>
+          <FormControl size="small" className={styles.filterPerPage}>
             <InputLabel>Por página</InputLabel>
             <Select value={limit} label="Por página" onChange={handleLimitChange}>
               {LIMIT_OPTIONS.map((o) => (
@@ -221,27 +221,27 @@ export default function Audit() {
 
         {/* Cards - mobile */}
         {isMobile && (
-          <Box display="flex" flexDirection="column" gap={1.5}>
+          <Box className={styles.mobileCards}>
             {records.length === 0 ? (
               <Typography align="center" color="text.secondary">Nenhum registro encontrado.</Typography>
             ) : (
               records.map((record) => (
                 <Card key={record.id} variant="outlined">
-                  <CardContent sx={{ pb: 0 }}>
-                    <Box display="flex" justifyContent="space-between" alignItems="center" mb={0.5}>
-                      <Typography variant="subtitle2">#{record.id} · {record.entityName} / {record.entityId}</Typography>
+                  <CardContent sx={{ pb: 1 }}>
+                    <Box className={styles.cardHeader}>
+                      <Box display="flex" alignItems="center" gap={0.5}>
+                        <Tooltip title="Ver detalhes">
+                          <IconButton size="small" onClick={() => handleViewDetail(record)}>
+                            <VisibilityIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+                        <Typography variant="subtitle2">#{record.id} · {record.entityName} / {record.entityId}</Typography>
+                      </Box>
                       <Chip label={record.action} color={ACTION_COLORS[record.action] ?? "default"} size="small" />
                     </Box>
                     <Typography variant="body2" color="text.secondary">Usuário ID: {record.userId}</Typography>
                     <Typography variant="body2" color="text.secondary">{new Date(record.createdAt).toLocaleString("pt-BR")}</Typography>
                   </CardContent>
-                  <CardActions sx={{ pt: 0 }}>
-                    <Tooltip title="Ver detalhes">
-                      <IconButton size="small" onClick={() => handleViewDetail(record)}>
-                        <VisibilityIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
-                  </CardActions>
                 </Card>
               ))
             )}
@@ -249,11 +249,11 @@ export default function Audit() {
         )}
 
         {/* Paginação */}
-        <Box display="flex" justifyContent="space-between" alignItems="center" mt={1} px={1}>
+        <Box className={styles.paginationRow}>
           <Typography variant="body2" color="text.secondary">
             Total: {meta.total} registro{meta.total !== 1 ? "s" : ""}
           </Typography>
-          <Box display="flex" alignItems="center" gap={1}>
+          <Box className={styles.paginationControls}>
             <IconButton
               size="small"
               onClick={() => setPage((p) => Math.max(1, p - 1))}

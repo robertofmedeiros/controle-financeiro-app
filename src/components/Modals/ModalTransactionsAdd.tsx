@@ -7,7 +7,7 @@ import { notifierStore } from "../Store/NotifierStore";
 
 interface ModalTransactionsAddProperties {
     open: boolean,
-    onClose: () => void,
+    onClose: (cancel: boolean) => void,
     transacao?: Transaction | null,
     year: number,
     month: number,
@@ -61,6 +61,16 @@ const ModalTransactionsAdd: FC<ModalTransactionsAddProperties> = ({
         setForm({ ...form, [name]: e.target.value });
     };
 
+    const handleDelete = async () => {
+        if (!transacao?.id) return;
+        try {
+            await api.delete("/lancamentos/" + transacao.id);
+            onClose(false);
+        } catch (err) {
+            // Trate o erro conforme necessário
+        }
+    };
+
     const handleSubmit = async () => {
         try {
             console.log(">>>", transacao);
@@ -69,7 +79,7 @@ const ModalTransactionsAdd: FC<ModalTransactionsAddProperties> = ({
             } else {
                 await api.post("/lancamentos", form);
             }
-            onClose();
+            onClose(false);
             setForm({ descricao: "", valor: 0, date: "", type: "expense", ano: year, mes: month, situacao: status});
         } catch (err) {
             // Trate o erro conforme necessário
@@ -133,7 +143,7 @@ const ModalTransactionsAdd: FC<ModalTransactionsAddProperties> = ({
     }
     return <>
         <Dialog open={open} onClose={onClose} fullWidth>
-            <DialogTitle>Nova Transação</DialogTitle>
+            <DialogTitle>{transacao?.id ? "Editar Transação" : "Nova Transação"}</DialogTitle>
             <div>
                 <DialogContent>
                     <TextField
@@ -164,7 +174,12 @@ const ModalTransactionsAdd: FC<ModalTransactionsAddProperties> = ({
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={onClose}>Cancelar</Button>
+                    {transacao?.id && (
+                        <Button color="error" onClick={handleDelete} sx={{ mr: "auto" }} variant="contained">
+                            Excluir
+                        </Button>
+                    )}
+                    <Button onClick={() => onClose(true)}>Cancelar</Button>
                     <Button onClick={() => {
                         if (validateFields()) {
                             handleSubmit();

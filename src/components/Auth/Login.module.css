@@ -1,0 +1,22 @@
+/* ─── Login ─────────────────────────────────────────────────────── */
+.loginWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15%;
+}
+
+.loginCard {
+  width: 100%;
+  max-width: 360px;
+  margin: 2%;
+  padding: var(--space-4);
+}
+
+.loginTitle {
+  margin-bottom: var(--space-2) !important;
+}
+
+.loginButton {
+  margin-top: var(--space-2) !important;
+}

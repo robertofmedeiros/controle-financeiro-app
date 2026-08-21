@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import { FC } from "react";
 import { AuditRecord } from "../../types/Audit";
+import styles from "./ModalAuditDetail.module.css";
 
 interface ModalAuditDetailProps {
   open: boolean;
@@ -56,18 +57,17 @@ const ModalAuditDetail: FC<ModalAuditDetailProps> = ({ open, onClose, record }) 
     <Dialog
       open={open}
       onClose={onClose}
-      maxWidth="lg"
-      fullWidth
+      maxWidth={false}
       sx={{
         "& .MuiDialog-paper": {
-          width: { xs: "98%", sm: undefined },
-          maxWidth: { xs: "98%", sm: undefined },
+          width: { xs: "98%", sm: "50%" },
+          maxWidth: { xs: "98%", sm: "50%" },
           m: { xs: "1%", sm: 2 },
         },
       }}
     >
       <DialogTitle>
-        <Box display="flex" alignItems="center" gap={1}>
+        <Box className={styles.titleBox}>
           Auditoria #{record.id}
           <Chip
             label={record.action}
@@ -84,7 +84,7 @@ const ModalAuditDetail: FC<ModalAuditDetailProps> = ({ open, onClose, record }) 
         <TableContainer component={Paper} variant="outlined">
           <Table size="small" sx={{ tableLayout: "fixed", width: "100%" }}>
             <TableHead>
-              <TableRow sx={{ backgroundColor: "#f5f5f5" }}>
+              <TableRow className={styles.tableHeader}>
                 <TableCell sx={{ width: "25%" }}><strong>Campo</strong></TableCell>
                 <TableCell sx={{ width: "37.5%" }}><strong>Valor Anterior</strong></TableCell>
                 <TableCell sx={{ width: "37.5%" }}><strong>Novo Valor</strong></TableCell>
@@ -96,13 +96,13 @@ const ModalAuditDetail: FC<ModalAuditDetailProps> = ({ open, onClose, record }) 
                 return (
                   <TableRow
                     key={field}
-                    sx={changed ? { backgroundColor: "#fff8e1" } : undefined}
+                    className={changed ? styles.changedRow : undefined}
                   >
-                    <TableCell sx={{ fontWeight: changed ? 600 : 400, whiteSpace: "nowrap" }}>{field}</TableCell>
-                    <TableCell sx={{ color: changed ? "#d32f2f" : "inherit", wordBreak: "break-all" }}>
+                    <TableCell className={changed ? styles.fieldNameChanged : styles.fieldName}>{field}</TableCell>
+                    <TableCell className={changed ? styles.oldValueChanged : styles.oldValue}>
                       {formatValue(record.oldState?.[field])}
                     </TableCell>
-                    <TableCell sx={{ color: changed ? "#2e7d32" : "inherit", wordBreak: "break-all" }}>
+                    <TableCell className={changed ? styles.newValueChanged : styles.newValue}>
                       {formatValue(record.newState?.[field])}
                     </TableCell>
                   </TableRow>
