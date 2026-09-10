@@ -96,7 +96,7 @@ const ModalTransactionsAdd: FC<ModalTransactionsAddProperties> = ({
         ano: year,
         situacao: status
       });
-    }, [transacao])
+        }, [transacao, month, year, status])
 
     useEffect(() => {
         console.log("ModalTransactionsAdd open", open);

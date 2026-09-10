@@ -35,7 +35,7 @@ export default function Transactions() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [open, setOpen] = useState(false);
   const [currentTransaction, setCurrentTransaction] = useState<Transaction | null>(null);
-  const [status, setStatus] = useState<'PENDENTE' | 'PAGO'>('PENDENTE');
+  const [status] = useState<'PENDENTE' | 'PAGO'>('PENDENTE');
 
   useEffect(() => {
     fetchTransactions();

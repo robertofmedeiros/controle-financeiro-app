@@ -19,7 +19,6 @@ import {
   FormControl,
   SelectChangeEvent,
   Tooltip,
-  CircularProgress,
   Card,
   CardContent,
   useTheme,

@@ -61,7 +61,7 @@ export default function Login() {
     if (isAuthenticated()) {
       navigate('/transactions');
     }
-  }, [isAuthenticated()]);
+  }, [navigate]);
 
   const handleKeyDown = (e: any) => {
     console.log(">>>handleKeyDown", e.key);
